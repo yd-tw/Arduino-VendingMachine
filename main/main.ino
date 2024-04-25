@@ -1,6 +1,7 @@
 #include <SPI.h>
 #include <Wire.h>
 #include <Servo.h>
+#include <String.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include "src/HCSR04/HCSR04.h"
@@ -26,58 +27,35 @@ void setup() {
     for (;;)
       ;  // Don't proceed, loop forever
   }
-  codecat();
+
+  text("CodeCat");
   delay(1000);
-
-  // 清除畫面
   display.clearDisplay();
-
-  // 測試文字
 }
 
 void loop() {
-
-
   if (20 > HCSR04.distance()) {
-    testdraw();
+    text("Press\nButton\n\nowo");
     while (1) {
       if (digitalRead(2)) {
         myservo.write(60);
         for (int i = 5; i >= 0; i--) {
-          testdrawstyles(i);
+          text(String(i));
           delay(1000);
         }
         myservo.write(150);
-        codecat();
+        text("CodeCat");
         break;
       }
     }
   }
 }
 
-void testdrawstyles(int x) {
+void text(String s) {
   display.clearDisplay();
   display.setTextSize(2);       // 設定文字大小
   display.setTextColor(1);      // 1:OLED預設的顏色(這個會依該OLED的顏色來決定)
   display.setCursor(0, 0);      // 設定起始座標
-  display.print(x);  // 要顯示的字串
-  display.display();            // 要有這行才會把文字顯示出來
-}
-
-void testdraw() {
-  display.clearDisplay();
-  display.setTextSize(2);       // 設定文字大小
-  display.setTextColor(1);      // 1:OLED預設的顏色(這個會依該OLED的顏色來決定)
-  display.setCursor(0, 0);      // 設定起始座標
-  display.print("Press\nButton\n\nowo");  // 要顯示的字串
-  display.display();            // 要有這行才會把文字顯示出來
-}
-
-void codecat() {
-  display.clearDisplay();
-  display.setTextSize(2);       // 設定文字大小
-  display.setTextColor(1);      // 1:OLED預設的顏色(這個會依該OLED的顏色來決定)
-  display.setCursor(0, 0);      // 設定起始座標
-  display.print("CodeCat");  // 要顯示的字串
+  display.print(s);  // 要顯示的字串
   display.display();            // 要有這行才會把文字顯示出來
 }
