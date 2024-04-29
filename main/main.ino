@@ -34,9 +34,13 @@ void setup() {
 }
 
 void loop() {
-  if (20 > HCSR04.distance()) {
+  int dis = HCSR04.distance();
+  Serial.println("dis: " + dis);
+
+  if (20 > dis) {
     text("Press\nButton\n\nowo");
     while (1) {
+      Serial.println("state: wait for button");
       if (digitalRead(2)) {
         myservo.write(60);
         for (int i = 5; i >= 0; i--) {
@@ -52,6 +56,7 @@ void loop() {
 }
 
 void text(String s) {
+  Serial.println("show: " + s);
   display.clearDisplay();
   display.setTextSize(2);       // 設定文字大小
   display.setTextColor(1);      // 1:OLED預設的顏色(這個會依該OLED的顏色來決定)
