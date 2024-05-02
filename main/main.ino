@@ -35,7 +35,7 @@ void setup() {
 
 void loop() {
   int dis = HCSR04.distance();
-  Serial.println("dis: " + dis);
+  Serial.println("dis: " + String(dis));
 
   if (20 > dis) {
     text("Press\nButton\n\nowo");
